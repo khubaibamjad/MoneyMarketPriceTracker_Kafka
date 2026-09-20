@@ -21,7 +21,7 @@ public class PriceTick {
 
     private BigDecimal price;
 
-    private Instant timestamp;
+    private Instant timeStamp;
 
     public PriceTick(){};
 
@@ -30,7 +30,7 @@ public class PriceTick {
         this.symbol=symbol;
         this.assetType=assetType;
         this.price=price;
-        this.timestamp=timestamp;
+        this.timeStamp=timestamp;
     }
 
     public PriceTick(String symbol, AssetType assetType, BigDecimal price, Instant timeStamp) {
@@ -53,6 +53,6 @@ public class PriceTick {
     }
 
     public Instant getTimestamp() {
-        return timestamp;
+        return timeStamp;
     }
 }
