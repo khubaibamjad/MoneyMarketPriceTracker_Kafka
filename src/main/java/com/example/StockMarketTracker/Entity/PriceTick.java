@@ -34,6 +34,10 @@ public class PriceTick {
     }
 
     public PriceTick(String symbol, AssetType assetType, BigDecimal price, Instant timeStamp) {
+        this.symbol=symbol;
+        this.assetType=assetType;
+        this.price=price;
+        this.timeStamp=timeStamp;
     }
 
     public Long getId() {
