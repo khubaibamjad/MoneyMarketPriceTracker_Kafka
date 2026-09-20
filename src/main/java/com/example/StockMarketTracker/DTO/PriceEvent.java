@@ -1,10 +1,12 @@
 package com.example.StockMarketTracker.DTO;
 
 import com.example.StockMarketTracker.Entity.PriceTick;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@Component
 public class PriceEvent {
 
     private String symbol;
