@@ -22,5 +22,4 @@ public class StockMarketTrackerApplication {
                 .replicas(1)
                 .build();
     }
-
 }
