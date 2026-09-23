@@ -1,0 +1,39 @@
+package com.example.StockMarketTracker.Market;
+
+
+import com.example.StockMarketTracker.DTO.PriceEvent;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+
+import java.lang.module.FindException;
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Component
+public class MarketDataClient {
+
+
+    private final RestClient restClient = RestClient.create();
+
+    @Value("${finhub.Api-key}")
+    private String finhubApiKey;
+
+    public PriceEvent fetchQuoteSymbol (String symbol)
+    {
+        FinnhubQuote quote = restClient.get()
+                .uri("https://finnhub.io/api/v1/quote?symbol={symbol}&token={token}", symbol, finhubApiKey)
+                .retrieve()
+                .body(FinnhubQuote.class);
+
+        PriceEvent event = new PriceEvent();
+        event.setSymbol(symbol);
+        event.setAssetType("Stock");
+        event.setPrice(BigDecimal.valueOf(quote.c()));
+        event.setTimeStamp(Instant.now());
+
+        return event;
+    }
+
+    public record FinnhubQuote(double c, double h, double l, double o, double pc, long t){};
+}
