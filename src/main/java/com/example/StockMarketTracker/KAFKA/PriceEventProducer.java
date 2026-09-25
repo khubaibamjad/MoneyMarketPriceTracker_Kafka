@@ -22,7 +22,7 @@ public class PriceEventProducer {
         this.kafkaTemplate=kafkaTemplate;
     }
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 300000)
     public void publishPriceSymbol()
     {
         String symbol = "AAPL";
