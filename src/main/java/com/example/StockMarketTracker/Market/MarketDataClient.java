@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClient;
 import java.lang.module.FindException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Map;
 
 @Component
 public class MarketDataClient {
@@ -35,5 +36,28 @@ public class MarketDataClient {
         return event;
     }
 
+
+    @SuppressWarnings("unchecked")
+
+    public PriceEvent fetchCryptoPrice(String coinGeckoId, String symbol)
+    {
+        Map<String, Map<String, Double>> response = restClient
+                .get()
+                .uri("https://api.coingecko.com/api/v3/simple/price?ids={coinGeckoId}&vs_currencies=usd", coinGeckoId)
+                .retrieve()
+                .body(Map.class);
+
+        Number priceNumber = (Number) response.get(coinGeckoId).get("usd");
+        double price = priceNumber.doubleValue();
+
+
+        PriceEvent event = new PriceEvent();
+        event.setSymbol(symbol);
+        event.setAssetType("Crypto");
+        event.setPrice(BigDecimal.valueOf(price));
+        event.setTimeStamp(Instant.now());
+
+        return event;
+    }
     public record FinnhubQuote(double c, double h, double l, double o, double pc, long t){};
 }
