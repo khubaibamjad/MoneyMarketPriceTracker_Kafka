@@ -50,6 +50,13 @@ public class MarketDataClient {
         double priceCrypto = response.get(coinGeckoId).get("usd");
 
 
+        PriceEvent event = new PriceEvent();
+        event.setSymbol(symbol);
+        event.setAssetType("Crypto");
+        event.setPrice(BigDecimal.valueOf(priceCrypto));
+        event.setTimeStamp(Instant.now());
+
+        return event;
     }
     public record FinnhubQuote(double c, double h, double l, double o, double pc, long t){};
 }
