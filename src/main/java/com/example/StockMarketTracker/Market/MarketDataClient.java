@@ -43,17 +43,18 @@ public class MarketDataClient {
     {
         Map<String, Map<String, Double>> response = restClient
                 .get()
-                .uri("https://api.coingecko.com/api/v3/simple/price?ids={id}&vs_currencies=usd", symbol)
+                .uri("https://api.coingecko.com/api/v3/simple/price?ids={coinGeckoId}&vs_currencies=usd", coinGeckoId)
                 .retrieve()
                 .body(Map.class);
 
-        double priceCrypto = response.get(coinGeckoId).get("usd");
+        Number priceNumber = (Number) response.get(coinGeckoId).get("usd");
+        double price = priceNumber.doubleValue();
 
 
         PriceEvent event = new PriceEvent();
         event.setSymbol(symbol);
         event.setAssetType("Crypto");
-        event.setPrice(BigDecimal.valueOf(priceCrypto));
+        event.setPrice(BigDecimal.valueOf(price));
         event.setTimeStamp(Instant.now());
 
         return event;
