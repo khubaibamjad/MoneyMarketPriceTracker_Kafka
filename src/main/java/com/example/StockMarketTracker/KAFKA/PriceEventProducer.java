@@ -26,9 +26,14 @@ public class PriceEventProducer {
     public void publishPriceSymbol()
     {
         String symbol = "AAPL";
-        PriceEvent event = marketDataClient.fetchQuoteSymbol(symbol);
-        kafkaTemplate.send("price-ticks", symbol, event);
-        System.out.println("Published the Price of Symbol: "+ symbol +"@ Price: "+ event.getPrice());
+        PriceEvent StockEvent = marketDataClient.fetchQuoteSymbol(symbol);
+        kafkaTemplate.send("price-ticks", symbol, StockEvent);
+        System.out.println("Published the Price of Symbol: "+ symbol +"@ Price: "+ StockEvent.getPrice());
+
+        String CryptoSymbol = "BTCUSD";
+        PriceEvent CryptoEvent = marketDataClient.fetchCryptoPrice("bitcoin", CryptoSymbol);
+        kafkaTemplate.send("price-ticks", CryptoSymbol, CryptoEvent);
+        System.out.println("Published the Price of Symbol: "+ symbol +"@ Price: "+ CryptoEvent.getPrice());
     }
 
 }
