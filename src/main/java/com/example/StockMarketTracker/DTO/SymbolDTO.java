@@ -1,8 +1,12 @@
 package com.example.StockMarketTracker.DTO;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
+
+@Component
 public class SymbolDTO {
 
     private  String Symbol;

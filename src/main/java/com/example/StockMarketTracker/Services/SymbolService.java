@@ -13,12 +13,10 @@ import java.util.List;
 public class SymbolService {
 
     private final PriceTickRepository priceTickRepository;
-    private final PriceTickController priceTickController;
 
 
-    public SymbolService(SymbolDTO symbolDTO, PriceTickRepository priceTickRepository, PriceTickController priceTickController) {
+    public SymbolService(PriceTickRepository priceTickRepository) {
         this.priceTickRepository = priceTickRepository;
-        this.priceTickController = priceTickController;
     }
 
     private SymbolDTO convertToDTO(PriceTick priceTick) {
@@ -29,7 +27,7 @@ public class SymbolService {
                 , priceTick.getTimestamp());
     }
 
-    private List<SymbolDTO> getAllSymbols ()
+    public List<SymbolDTO> getAllSymbols()
     {
         return priceTickRepository.findAll()
                 .stream()
@@ -37,5 +35,11 @@ public class SymbolService {
                 .toList();
     }
 
-
+    public List<SymbolDTO> getBySymbolName(String symbol)
+    {
+        return priceTickRepository.findBySymbol(symbol)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
 }
