@@ -2,8 +2,10 @@ package com.example.StockMarketTracker.Controllers;
 
 
 import com.example.StockMarketTracker.DTO.PriceEvent;
+import com.example.StockMarketTracker.DTO.SymbolDTO;
 import com.example.StockMarketTracker.Entity.PriceTick;
 import com.example.StockMarketTracker.Repository.PriceTickRepository;
+import com.example.StockMarketTracker.Services.SymbolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,19 +19,21 @@ import java.util.List;
 @RequestMapping("/prices")
 public class PriceTickController {
 
+
     @Autowired
-    PriceTickRepository priceTickRepository;
+    SymbolService symbolService;
+
 
 
     @GetMapping("/all")
-    public List<PriceTick> getAll()
+    public List<SymbolDTO> getAll()
     {
-        return priceTickRepository.findAll();
+        return symbolService.getAllSymbols();
     }
 
     @GetMapping("/{symbol}")
-    public List<PriceTick> getBySymbol(@PathVariable String symbol)
+    public List<SymbolDTO> getBySymbol(@PathVariable String symbol)
     {
-        return priceTickRepository.findBySymbol(symbol.toUpperCase());
+        return symbolService.getBySymbolName(symbol);
     }
 }

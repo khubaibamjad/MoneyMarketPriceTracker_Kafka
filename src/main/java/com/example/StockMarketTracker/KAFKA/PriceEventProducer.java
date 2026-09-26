@@ -4,6 +4,8 @@ package com.example.StockMarketTracker.KAFKA;
 import com.example.StockMarketTracker.DTO.PriceEvent;
 import com.example.StockMarketTracker.Market.MarketDataClient;
 import com.example.StockMarketTracker.Repository.PriceTickRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class PriceEventProducer {
 
 
+    private final Logger logger  = LoggerFactory.getLogger(PriceEventProducer.class);
     private final MarketDataClient marketDataClient;
     private final KafkaTemplate<String, PriceEvent> kafkaTemplate;
 
@@ -28,12 +31,12 @@ public class PriceEventProducer {
         String symbol = "AAPL";
         PriceEvent StockEvent = marketDataClient.fetchQuoteSymbol(symbol);
         kafkaTemplate.send("price-ticks", symbol, StockEvent);
-        System.out.println("Published the Price of Symbol: "+ symbol +"@ Price: "+ StockEvent.getPrice());
+        logger.info("Published the Price of Symbol :{} @ Price :{}",symbol, StockEvent.getPrice());
 
         String CryptoSymbol = "BTCUSD";
         PriceEvent CryptoEvent = marketDataClient.fetchCryptoPrice("bitcoin", CryptoSymbol);
         kafkaTemplate.send("price-ticks", CryptoSymbol, CryptoEvent);
-        System.out.println("Published the Price of Symbol: "+ symbol +"@ Price: "+ CryptoEvent.getPrice());
+        logger.info("Published the Price of Crypto Symbol :{} @ Price :{}",symbol, CryptoEvent.getPrice());
     }
 
 }
