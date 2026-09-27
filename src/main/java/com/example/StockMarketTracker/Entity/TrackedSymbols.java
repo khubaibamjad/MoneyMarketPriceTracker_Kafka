@@ -15,7 +15,7 @@ public class TrackedSymbols {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String Symbol;
+    private String symbol;
 
     private String type;
     private String coinGeckoId;
@@ -24,8 +24,8 @@ public class TrackedSymbols {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getSymbol() { return Symbol; }
-    public void setSymbol(String symbol) { this.Symbol = Symbol; }
+    public String getSymbol() { return symbol; }
+    public void setSymbol(String symbol) { this.symbol = symbol; }
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }

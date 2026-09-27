@@ -28,7 +28,7 @@ public class WatchListController {
 
     @PostMapping
     public ResponseEntity<?> addTrackedSymbol(@RequestBody TrackedSymbols trackedSymbol) {
-        if (trackedSymbolRepository.existBySymbol(trackedSymbol.getSymbol())) {
+        if (trackedSymbolRepository.existsBySymbol(trackedSymbol.getSymbol())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Symbol already tracked: " + trackedSymbol.getSymbol());
         }
 

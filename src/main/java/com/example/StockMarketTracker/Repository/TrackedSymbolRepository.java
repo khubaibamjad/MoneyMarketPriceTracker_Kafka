@@ -9,5 +9,5 @@ public interface TrackedSymbolRepository extends JpaRepository<TrackedSymbols, L
 
     Optional <TrackedSymbols> getBySymbol(String symbol);
 
-    boolean existBySymbol(String symbol);
+    boolean existsBySymbol(String symbol);
 }
