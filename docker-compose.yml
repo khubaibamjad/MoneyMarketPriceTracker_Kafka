@@ -4,7 +4,7 @@ services:
     hostname: kafka
     container_name: kafka
     ports:
-    - '9092:9092'
+      - '9092:9092'
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -21,3 +21,14 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+  app:
+    build: .
+    container_name: stock-market-tracker
+    depends_on:
+      - kafka
+    ports:
+      - '8080:8080'
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 'kafka:19092'
+      FINNHUB_API_KEY: ${FINNHUB_API_KEY}
